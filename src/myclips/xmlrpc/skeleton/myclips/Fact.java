@@ -13,7 +13,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class Fact extends ASkeleton {
+public class Fact extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.Fact.Fact";
 

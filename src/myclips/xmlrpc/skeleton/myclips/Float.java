@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class Float extends MyClipsType {
+public class Float extends Number {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.Float";
 

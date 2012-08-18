@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class Lexeme extends MyClipsType {
+public class Lexeme extends BaseType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.Lexeme";
 
