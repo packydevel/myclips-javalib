@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class TemplateRhsPattern extends ASkeleton {
+public class TemplateRhsPattern extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.TemplateRhsPattern";
 

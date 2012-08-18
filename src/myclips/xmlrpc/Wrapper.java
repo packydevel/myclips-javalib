@@ -2,7 +2,14 @@ package myclips.xmlrpc;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.management.ServiceNotFoundException;
+
+import myclips.xmlrpc.services.InvalidServiceException;
+import myclips.xmlrpc.services.RemoteShell;
+import myclips.xmlrpc.skeleton.myclips.Integer;
 import myclips.xmlrpc.skeleton.myclips.Symbol;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -13,14 +20,37 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 public class Wrapper {
 
 	public Wrapper() {
-		// TODO Auto-generated constructor stub
 		
 	}
 	
-	public static void main(String[] args) throws MalformedURLException, XmlRpcException {
-
-		System.out.println(new Symbol());
-		System.out.println(new myclips.xmlrpc.skeleton.myclips.String());
+	
+	public static void main(String[] args) throws ConnectionFailed, MalformedURLException, InvalidServiceException, XmlRpcException, ServiceNotFoundException  {
+		
+		
+		
+		
+		MyClips mc = new MyClips("http://localhost:8081/RPC2");
+		
+		mc.addService("RemoteShell", RemoteShell.class);
+		
+		RemoteShell rs = (RemoteShell) mc.getService("RemoteShell");
+		
+		Object theReturn = rs.doDo("(+ 1 1)");
+		
+		System.out.println(theReturn);
+		
+		if (theReturn instanceof myclips.xmlrpc.skeleton.myclips.Integer) {
+			
+			System.out.println( ((myclips.xmlrpc.skeleton.myclips.Integer) theReturn).getContent());
+		}
+		
+		theReturn = rs.doDo("(assert (A B C))");
+		
+		System.out.println(theReturn);
+		
+		
+		
+		
 		
 /*		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	    config.setServerURL(new URL("http://127.0.0.1:8081/RPC2"));

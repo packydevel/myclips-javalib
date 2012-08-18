@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class OrderedRhsPattern extends ASkeleton {
+public class OrderedRhsPattern extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.OrderedRhsPattern";
 

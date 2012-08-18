@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class ConnectedConstraint extends ASkeleton {
+public class ConnectedConstraint extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.ConnectedConstraint";
 

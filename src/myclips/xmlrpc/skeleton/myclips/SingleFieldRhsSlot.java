@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class SingleFieldRhsSlot extends ASkeleton {
+public class SingleFieldRhsSlot extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.SingleFieldRhsSlot";
 

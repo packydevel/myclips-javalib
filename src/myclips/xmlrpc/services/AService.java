@@ -11,7 +11,7 @@ public class AService implements IService {
 	
 	AService() {}
 	
-	public static IService factory(Class<IService> theServiceClass, MyClips owner, String linkedServiceName) throws InstantiationException, IllegalAccessException {
+	public static IService factory(Class<? extends IService> theServiceClass, MyClips owner, String linkedServiceName) throws InstantiationException, IllegalAccessException {
 		IService theService = (IService) theServiceClass.newInstance();
 		
 		return theService
@@ -44,7 +44,6 @@ public class AService implements IService {
 	public Object doGeneric(String methodName, boolean sessionized, Object... args) throws XmlRpcException {
 		
 		String realMethod = this.linkedServiceName + "." + methodName;
-		
 		return this.owner.getConnection().send(realMethod, sessionized, args);
 		
 	}

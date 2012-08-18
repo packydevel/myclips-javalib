@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class PositiveTerm extends ASkeleton {
+public class PositiveTerm extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.PositiveTerm";
 

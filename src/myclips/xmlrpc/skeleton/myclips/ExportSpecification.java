@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class ExportSpecification extends ASkeleton {
+public class ExportSpecification extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.ExportSpecification";
 

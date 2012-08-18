@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class MultiFieldVariable extends ASkeleton {
+public class MultiFieldVariable extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.MultiFieldVariable";
 

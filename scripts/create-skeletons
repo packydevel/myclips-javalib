@@ -44,14 +44,14 @@ theClassString = """\
 
 package myclips.xmlrpc.skeleton.myclips;
 
-import myclips.xmlrpc.skeleton.ASkeleton;
+import myclips.xmlrpc.skeleton.ASkeleton;ASkeleton
 
 /**
  * the {originalClass} skeleton
  *  
  * @author Francesco Capozzo
  */
-public class {class} extends ASkeleton {{
+public class {class} extends MyClipsType {{
 
     public static final java.lang.String SKELETON_NAME = "{originalClass}";
 

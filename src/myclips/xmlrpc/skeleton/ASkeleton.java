@@ -12,7 +12,8 @@ public class ASkeleton implements ISkeleton {
 		String methodName = "set" + Utils.ucFist(fieldName); 
 		
 		try {
-			Method theMethod = this.getClass().getMethod(methodName, new Class<?>[]{fieldValue.getClass()});
+			Object c = this.getClass();
+			Method theMethod = this.getClass().getMethod(methodName, new Class<?>[]{Object.class});
 			theMethod.invoke(this, fieldValue);
 		} catch (Exception e) {
 			// the method is not available, so ignore this call
@@ -24,6 +25,14 @@ public class ASkeleton implements ISkeleton {
 	public java.lang.String getSkeletonType() {
 		try {
 			return (String) this.getClass().getField("SKELETON_NAME").get(this.getClass());
+		} catch (Exception e) {
+			return "object";
+		}
+	}
+	
+	public static java.lang.String getSkeletonType( Class<? extends ASkeleton> aSkeleton ) {
+		try {
+			return (String) aSkeleton.getField("SKELETON_NAME").get(aSkeleton);
 		} catch (Exception e) {
 			return "object";
 		}

@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class RuleProperty extends ASkeleton {
+public class RuleProperty extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.RuleProperty";
 

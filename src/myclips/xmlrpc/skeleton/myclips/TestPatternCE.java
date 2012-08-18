@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class TestPatternCE extends ASkeleton {
+public class TestPatternCE extends MyClipsType {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.TestPatternCE";
 
