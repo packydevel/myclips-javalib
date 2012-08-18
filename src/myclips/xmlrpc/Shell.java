@@ -23,15 +23,31 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 public class Shell {
 	
 	public static void main(String[] args) throws ConnectionFailed, InvalidServiceException, XmlRpcException, ServiceNotFoundException, IOException  {
+
+		System.out.println("MyCLIPS Java Remote Shell: taking orders... ");
+		System.out.println("	(session ends after 5 minutes without commands)");
+		System.out.println();
 		
-		MyClips mc = new MyClips("http://localhost:8081/RPC2");
+		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+		String theRead;
+		
+		System.out.print(">>> MyCLIPS XMLRPC Server address? ");
+		theRead = stdin.readLine();
+		
+		MyClips mc;
+		
+		try {
+			mc = new MyClips(theRead);
+		} catch (Exception e) {
+			System.out.print("		[Invalid address. Fallback to `http://localhost:8081/RPC2`]");
+			mc = new MyClips("http://localhost:8081/RPC2");
+		}
+		
 		
 		mc.addService("RemoteShell", RemoteShell.class);
 		
 		RemoteShell rs = (RemoteShell) mc.getService("RemoteShell");
 
-		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		String theRead;
 
 		System.out.println("MyCLIPS Java Remote Shell: taking orders... ");
 		System.out.println("	(session ends after 5 minutes without commands)");
