@@ -2,8 +2,8 @@ package myclips.xmlrpc;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
+
+import myclips.xmlrpc.skeleton.myclips.Symbol;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -19,7 +19,10 @@ public class Wrapper {
 	
 	public static void main(String[] args) throws MalformedURLException, XmlRpcException {
 
-		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		System.out.println(new Symbol());
+		System.out.println(new myclips.xmlrpc.skeleton.myclips.String());
+		
+/*		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	    config.setServerURL(new URL("http://127.0.0.1:8081/RPC2"));
 	    
 	    config.setEnabledForExtensions(true);
@@ -49,7 +52,7 @@ public class Wrapper {
 	    	System.out.println("\t" + aWme);
 	    }
 	    
-	    
+*/	    
 	}
 	
 }

@@ -1,0 +1,131 @@
+#!/usr/bin/python2.7
+
+import sys
+import os
+import importlib
+import time
+from genericpath import exists, isdir
+
+MYCLIPS_SERVER_SRC_PATHS = ['./myclips-server', '../myclips-server', '../../myclips-server',
+                            './myclips-server/src', '../myclips-server/src', '../../myclips-server/src',
+                            './lib/myclips-server', '../lib/myclips-server', '../../lib/myclips-server']
+
+OUTPUT_DIRECTORY = '../src/myclips/xmlrpc/skeleton/myclips'
+
+pathIndex = -1
+while True:
+    try:
+        import myclips_server
+        break
+    except ImportError:
+        if pathIndex > -1:
+            sys.path.pop()
+        pathIndex += 1
+        try:
+            sys.path.append(os.path.abspath( MYCLIPS_SERVER_SRC_PATHS[pathIndex]))
+        except:
+            print >> sys.stderr, "MyCLIPS xmlrpc server not found in:"
+            print >> sys.stderr, "    ", os.path.abspath( "." )
+            for p in MYCLIPS_SERVER_SRC_PATHS:
+                print >> sys.stderr, "    ", os.path.abspath(p)
+            exit(-2)
+
+
+OUTPUT_DIRECTORY = os.path.abspath(OUTPUT_DIRECTORY)
+
+if not exists(OUTPUT_DIRECTORY) \
+    or not isdir(OUTPUT_DIRECTORY) \
+    or not exists(OUTPUT_DIRECTORY + "/skeleton-generator.MARK"):
+
+    print >> sys.stderr, "Invalid output directory: %s" % OUTPUT_DIRECTORY
+    exit(-2)
+
+theClassString = """\
+
+package myclips.xmlrpc.skeleton.myclips;
+
+import myclips.xmlrpc.skeleton.ASkeleton;
+
+/**
+ * the {originalClass} skeleton
+ *  
+ * @author Francesco Capozzo
+ */
+public class {class} extends ASkeleton {{
+
+    public static final java.lang.String SKELETON_NAME = "{originalClass}";
+
+{properties}
+
+{methods}    
+    
+}}
+
+"""
+
+thePropertyString = """\
+    protected Object {0} = null;
+"""
+    
+theMethodString = """\
+    public Object get{method}() {{
+        return this.{property};
+    }}
+
+    @SuppressWarnings("unchecked")
+    public <T> T get{method}(Class<T> returnClass) {{
+        return (T) this.{property};
+    }}
+
+    public {class} set{method}(Object aValue) {{
+        this.{property} = aValue;
+        return this;
+    }}
+    
+"""    
+
+
+import myclips.parser.Types as types
+
+elements = [getattr(types, x) for x in dir(types)]
+
+TYPES = {}
+
+for aType in elements:
+    try:
+        if aType != types.ParsedType and issubclass(aType, types.ParsedType):
+            theSkeletonInfo = []
+            TYPES["myclips.parser.Types." + aType.__name__] = theSkeletonInfo
+            
+            for propName in aType.__FIELDS__:
+                theSkeletonInfo.append(propName)
+    except:
+        continue
+
+
+for (sClass, sProps) in TYPES.items():
+    
+    properties = ""
+    methods = ""
+    
+    cClass = sClass.split('.')[-1]
+    
+    for prop in sProps:
+        
+        properties += thePropertyString.format(prop)
+        methods += theMethodString.format(**{"class" : cClass, 
+                                           "method" : prop.capitalize(),
+                                           "property": prop})
+
+    if exists(OUTPUT_DIRECTORY + "/%s.java" % cClass):
+        print >> sys.stdout, "Skeleton exists: %s" % cClass
+        continue
+
+    fileRes = open(OUTPUT_DIRECTORY + "/%s.java" % cClass, 'w')
+
+    print >> fileRes, theClassString.format(**{"class" : cClass,
+                                   "originalClass": sClass,
+                                   "methods": methods,
+                                   "properties": properties})
+    
+    fileRes.close()    
