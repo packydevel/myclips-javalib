@@ -10,10 +10,15 @@ import java.util.Map;
 
 import javax.management.ServiceNotFoundException;
 
+import myclips.xmlrpc.listener.ConsoleLoggerListener;
+import myclips.xmlrpc.services.ClientEvents;
+import myclips.xmlrpc.services.ClientIO;
 import myclips.xmlrpc.services.InvalidServiceException;
 import myclips.xmlrpc.services.RemoteShell;
 import myclips.xmlrpc.skeleton.myclips.Integer;
 import myclips.xmlrpc.skeleton.myclips.Symbol;
+import myclips.xmlrpc.stream.ConsoleInputClientStream;
+import myclips.xmlrpc.stream.ConsoleOutputClientStream;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -22,7 +27,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 public class Shell {
 	
-	public static void main(String[] args) throws ConnectionFailed, InvalidServiceException, XmlRpcException, ServiceNotFoundException, IOException  {
+	public static void main(String[] args) throws Exception  {
 
 		System.out.println("MyCLIPS Java Remote Shell: taking orders... ");
 		System.out.println("	(session ends after 5 minutes without commands)");
@@ -44,8 +49,15 @@ public class Shell {
 		}
 		
 		
-		mc.addService("RemoteShell", RemoteShell.class);
+		mc.addService("ClientIO", ClientIO.class);
+		ClientIO io = (ClientIO) mc.getService("ClientIO");
+		io.register("stdout", System.out, ConsoleOutputClientStream.class);
+		io.register("stdin", System.in, ConsoleInputClientStream.class);
+
+		mc.addService("ClientEvents", ClientEvents.class);
+		ClientEvents ce = (ClientEvents) mc.getService("ClientEvents");
 		
+		mc.addService("RemoteShell", RemoteShell.class);
 		RemoteShell rs = (RemoteShell) mc.getService("RemoteShell");
 
 
@@ -53,16 +65,32 @@ public class Shell {
 		System.out.println("	(session ends after 5 minutes without commands)");
 		System.out.println();
 		
+		Object rBuffer = null;
+		
+		boolean listenerOn = false;
+		
 		while (true) {
 			System.out.print(">>> ");
 			theRead = stdin.readLine();
 			if (theRead.equals("(exit)") ) {
 				System.out.println("...BYE!");
 				System.exit(0);
-			} else if ( theRead.equals("(facts)") ) {
+			} else if (theRead.equals("(unwatch all)")) {
+				if (listenerOn) {
+					listenerOn = false;
+					ce.unregister("JListener");
+				}
 				
+			} else if (theRead.equals("(watch all)")) {
+				if (!listenerOn) {
+					listenerOn = true;
+					ce.register("JListener", ConsoleLoggerListener.class, ClientEvents.EVENTS.E_FACT_ASSERTED, ClientEvents.EVENTS.E_NODE_ADDED);
+				}
 			} else {
-				System.out.println(rs.doDo(theRead));
+				rBuffer = rs.doDo(theRead);
+				if (rBuffer != null ) {
+					System.out.println(rBuffer);
+				}
 			}
 		}
 		
