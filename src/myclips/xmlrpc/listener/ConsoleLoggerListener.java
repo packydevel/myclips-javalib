@@ -12,24 +12,13 @@ public class ConsoleLoggerListener extends ClientListener {
 		return true;
 	}
 
-	public void notify(Integer token, String anEventName, HashMap<?, ?> args) {
-		this.assertValid(token);
-		System.err.println(String.format("[Event: %s] %s", anEventName, args));
-	}	
-	
-	@Override
-	public void notify(Integer token, String anEventName, Object args) {
-		this.assertValid(token);
-		System.err.println(String.format("[Event: %s] %s", anEventName, args));
-	}
-
 	@Override
 	public void close(int token) {
 		System.err.println("CLOSE called on ConsoleLoggerListener");
 	}
 
 	@Override
-	public void notify(Integer token, String anEventName, Object... args) {
+	public void notify(Integer token, String anEventName, Object[] args) {
 		this.assertValid(token);
 		System.err.println(String.format("[Event: %s] %s", anEventName, Joiner.on(", ").join((Object[]) args) ));
 	}

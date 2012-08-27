@@ -1,33 +1,26 @@
 package myclips.xmlrpc;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.management.ServiceNotFoundException;
 
 import myclips.xmlrpc.listener.ConsoleLoggerListener;
 import myclips.xmlrpc.services.ClientEvents;
 import myclips.xmlrpc.services.ClientIO;
-import myclips.xmlrpc.services.InvalidServiceException;
 import myclips.xmlrpc.services.RemoteShell;
-import myclips.xmlrpc.skeleton.myclips.Integer;
-import myclips.xmlrpc.skeleton.myclips.Symbol;
 import myclips.xmlrpc.stream.ConsoleInputClientStream;
 import myclips.xmlrpc.stream.ConsoleOutputClientStream;
-
-import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 
 public class Shell {
 	
+	static {
+		System.setProperty("org.apache.commons.logging.Log", 
+							"org.apache.commons.logging.impl.NoOpLog");
+	}
+	
+	
 	public static void main(String[] args) throws Exception  {
+		
 
 		System.out.println("MyCLIPS Java Remote Shell: taking orders... ");
 		System.out.println("	(session ends after 5 minutes without commands)");
