@@ -1,19 +1,3 @@
-;;; Version 1.2
-;;; 
-;;; JRules Changes
-
-;;; Reference Material
-;;;
-;;; http://www.angusj.com/sudoku/hints
-;;; http://www.scanraid.com/BasicStrategies.htm
-;;; http://www.sudokuoftheday.com/pages/techniques-overview
-;;; http://www.sudokuonline.us/sudoku_solving_techniques
-;;; http://www.sadmansoftware.com/sudoku/techniques.htm
-;;; http://www.krazydad.com/blog/2005/09/29/an-index-of-sudoku-strategies/
-
-;;; #######################
-;;; DEFTEMPLATES & DEFFACTS
-;;; #######################
 
 (deftemplate possible
    (slot row)
@@ -52,14 +36,6 @@
 (deftemplate unsolved
    (slot row)
    (slot column))
-      
-;;; ###########
-;;; SETUP RULES
-;;; ###########
-
-;;; **********
-;;; initialize
-;;; **********
 
 (defrule initialize
 
@@ -93,9 +69,6 @@
    (assert (size-value (size 5) (value 24)))
    (assert (size-value (size 5) (value 25))))
 
-;;; ***********
-;;; stress-test
-;;; ***********
 
 (defrule stress-test
    
@@ -117,10 +90,6 @@
    
    (assert (rank (value ?next) (process yes))))
    
-;;; *****************
-;;; enable-techniques
-;;; *****************
-
 (defrule enable-techniques
 
    (declare (salience 10))
@@ -138,10 +107,6 @@
    (assert (rank (value 1) (process yes))))
 
 
-;;; ****************
-;;; expand-any-start
-;;; ****************
-
 (defrule expand-any-start
 
    (declare (salience 10))
@@ -155,10 +120,6 @@
    =>
       
    (assert (iterate-rc (row ?r) (column ?c) (index 1))))
-
-;;; **********
-;;; expand-any
-;;; **********
 
 (defrule expand-any
 
@@ -184,10 +145,6 @@
    
    (modify ?f (index (+ ?v 1))))
    
-;;; *****************
-;;; position-expanded
-;;; *****************
-
 (defrule position-expanded
 
    (declare (salience 10))
@@ -208,13 +165,6 @@
    
    (retract ?f1 ?f2))
    
-;;; ###########
-;;; PHASE RULES
-;;; ###########
-
-;;; ***************
-;;; expand-any-done
-;;; ***************
 
 (defrule expand-any-done
 
@@ -231,10 +181,6 @@
    (assert (phase initial-output))
    (assert (print-position 1 1)))
    
-;;; ***********
-;;; begin-match
-;;; ***********
-
 (defrule begin-match
 
    (declare (salience -20))
@@ -246,10 +192,6 @@
    (retract ?f)
    
    (assert (phase match)))
-
-;;; *****************
-;;; begin-elimination
-;;; *****************
 
 (defrule begin-elimination
 
@@ -264,10 +206,6 @@
    (retract ?f)
    
    (assert (phase elimination)))
-
-;;; ******************
-;;; next-rank-unsolved
-;;; ******************
 
 (defrule next-rank-unsolved
 
@@ -291,10 +229,6 @@
       
    (assert (rank (value ?next) (process yes))))
 
-;;; **********************
-;;; next-rank-not-unsolved
-;;; **********************
-
 (defrule next-rank-not-unsolved
 
    (declare (salience -20))
@@ -317,10 +251,6 @@
       
    (assert (rank (value ?next) (process no))))
 
-;;; ************
-;;; begin-output
-;;; ************
-
 (defrule begin-output
 
    (declare (salience -20))
@@ -342,16 +272,3 @@
    (assert (phase final-output))
    (assert (print-position 1 1)))
 
-   
-
-  
-    
-   
-   
-   
-   
-   
-   
-   
-   
-   

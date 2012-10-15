@@ -1,10 +1,3 @@
-;;; ############
-;;; OUTPUT RULES
-;;; ############
-
-;;; *************
-;;; print-initial
-;;; *************
 
 (defrule print-initial
 
@@ -14,10 +7,6 @@
 
    =>)
 
-;;; ***********
-;;; print-final
-;;; ***********
-
 (defrule print-final
 
    (declare (salience 10))
@@ -25,10 +14,6 @@
    (phase final-output)
 
    =>)
-
-;;; **************************
-;;; print-position-value-found
-;;; **************************
 
 (defrule print-position-value-found
 
@@ -46,9 +31,6 @@
    
    (assert (position-printed ?r ?c)))
    
-;;; ******************************
-;;; print-position-value-not-found
-;;; ******************************
 
 (defrule print-position-value-not-found
 
@@ -66,9 +48,6 @@
    
    (assert (position-printed ?r ?c)))
    
-;;; ********************
-;;; next-position-column
-;;; ********************
 
 (defrule next-position-column
 
@@ -88,9 +67,6 @@
    
    (assert (print-position ?r (+ 1 ?c))))
 
-;;; *****************
-;;; next-position-row
-;;; *****************
    
 (defrule next-position-row
 
@@ -109,10 +85,6 @@
    (retract ?f1 ?f2)
    
    (assert (print-position (+ 1 ?r) 1)))
-   
-;;; ************************
-;;; output-done-rule-listing
-;;; ************************
 
 (defrule output-done-rule-listing
 
@@ -134,9 +106,6 @@
    
    (assert (phase list-rules)))
    
-;;; ***************************
-;;; output-done-no-rule-listing
-;;; ***************************
 
 (defrule output-done-no-rule-listing
 
@@ -156,9 +125,6 @@
    
    (retract ?f1 ?f2))
 
-;;; *******************
-;;; initial-output-done
-;;; *******************
 
 (defrule initial-output-done
 
@@ -176,9 +142,6 @@
    
    (retract ?f1 ?f2))
       
-;;; *********
-;;; list-rule
-;;; *********
 
 (defrule list-rule
 
@@ -192,10 +155,6 @@
    
    (retract ?f))
     
-;;; **************
-;;; list-rule-done
-;;; **************
-
 (defrule list-rule-done
 
    (declare (salience -10))

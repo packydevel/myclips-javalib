@@ -1,14 +1,3 @@
-;;; Version 1.2
-;;; 
-;;; JRules Changes
-
-;;; Version 1.1
-;;;
-;;; Added Unique Rectangles
-
-;;; #######################
-;;; DEFTEMPLATES & DEFFACTS
-;;; #######################
 
 (deftemplate position-value-color
    (slot row)
@@ -28,14 +17,6 @@
    (slot id)
    (slot value))
 
-;;; ####################
-;;; INITIALIZATION RULES
-;;; ####################
-
-
-;;; *********************
-;;; initialize-techniques
-;;; *********************
 
 (defrule initialize-techniques
   
@@ -62,14 +43,6 @@
    (assert (technique (name Forced-Chain-XY) (rank 17)))
    (assert (technique (name Unique-Rectangle) (rank 18))))
    
-;;; #################
-;;; ELIMINATION RULES
-;;; #################
-
-;;; *************
-;;; remove-colors
-;;; *************
-
 (defrule remove-colors ""
 
    (declare (salience 20))
@@ -81,10 +54,6 @@
    =>
    
    (retract ?f))
-
-;;; *************
-;;; remove-chains
-;;; *************
 
 (defrule remove-chains ""
 
@@ -98,10 +67,6 @@
    
    (retract ?f))
 
-;;; ***************
-;;; remove-unsolved
-;;; ***************
-   
 (defrule remove-unsolved
    
    (declare (salience 20))
@@ -118,10 +83,6 @@
          
    (retract ?f))
  
-;;; **********************
-;;; eliminate-not-employed
-;;; **********************
-
 (defrule eliminate-not-employed
 
    (declare (salience 10))
@@ -146,10 +107,6 @@
    
    (assert (technique-employed (rank ?p) (reason ?r))))
 
-;;; ******************
-;;; eliminate-employed
-;;; ******************
-
 (defrule eliminate-employed
 
    (declare (salience 10))
@@ -172,10 +129,6 @@
    
    (retract ?f1 ?f2))
   
-;;; ************
-;;; remove-extra
-;;; ************
-
 (defrule remove-extra
 
    (declare (salience 10))
@@ -190,10 +143,6 @@
    
    (retract ?f))
    
-;;; ****************
-;;; elimination-done
-;;; ****************
-
 (defrule elimination-done
 
    (declare (salience 10))
@@ -207,18 +156,6 @@
    (retract ?f)
    
    (assert (phase match)))
-
-;;; ###############
-;;; TECHNIQUE RULES
-;;; ###############
-
-;;; #############
-;;; Naked Singles
-;;; #############
-
-;;; ******************
-;;; naked-single-group
-;;; ******************
 
 (defrule naked-single-group
    
@@ -239,10 +176,6 @@
    =>
    
    (assert (impossible (id ?id2) (value ?v) (rank ?p) (reason "Naked Single"))))
-   
-;;; ****************
-;;; naked-single-row
-;;; ****************
 
 (defrule naked-single-row
    
@@ -264,10 +197,6 @@
    
    (assert (impossible (id ?id2) (value ?v) (rank ?p) (reason "Naked Single"))))
    
-;;; *******************
-;;; naked-single-column
-;;; *******************
-
 (defrule naked-single-column
    
    (phase match)
@@ -288,13 +217,6 @@
    
    (assert (impossible (id ?id2) (value ?v) (rank ?p) (reason "Naked Single"))))
 
-;;; ##############
-;;; Hidden Singles
-;;; ##############
-   
-;;; *******************
-;;; hidden-single-group
-;;; *******************
 
 (defrule hidden-single-group
    
@@ -316,10 +238,6 @@
    
    (assert (impossible (id ?id) (value ?v2) (rank ?p) (reason "Hidden Single"))))
    
-;;; *****************
-;;; hidden-single-row
-;;; *****************
-
 (defrule hidden-single-row
    
    (phase match)
@@ -340,10 +258,6 @@
    
    (assert (impossible (id ?id) (value ?v2) (rank ?p) (reason "Hidden Single"))))
    
-;;; ********************
-;;; hidden-single-column
-;;; ********************
-
 (defrule hidden-single-column
    
    (phase match)
@@ -364,13 +278,6 @@
    
    (assert (impossible (id ?id) (value ?v2) (rank ?p) (reason "Hidden Single"))))
 
-;;; ############################
-;;; Locked Candidate Single Line
-;;; ############################
-
-;;; ********************************
-;;; locked-candidate-single-line-row
-;;; ********************************
 
 (defrule locked-candidate-single-line-row
 
@@ -392,9 +299,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Locked Candidate Single Line"))))
 
-;;; ***********************************
-;;; locked-candidate-single-line-column
-;;; ***********************************
 
 (defrule locked-candidate-single-line-column
 
@@ -416,13 +320,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Locked Candidate Single Line"))))
 
-;;; ###############################
-;;; Locked Candidate Multiple Lines
-;;; ###############################
-
-;;; ***********************************
-;;; locked-candidate-multiple-lines-row
-;;; ***********************************
 
 (defrule locked-candidates-multiple-lines-row
 
@@ -443,10 +340,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Locked Candidate Multiple Lines"))))
-
-;;; **************************************
-;;; locked-candidate-multiple-lines-column
-;;; **************************************
 
 (defrule locked-candidate-multiple-lines-column
 
@@ -469,13 +362,6 @@
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Locked Candidate Multiple Lines"))))
 
 
-;;; ###########
-;;; Naked Pairs
-;;; ###########
-
-;;; ***************
-;;; naked-pairs-row
-;;; ***************
 
 (defrule naked-pairs-row
 
@@ -505,10 +391,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Pairs"))))
 
-;;; ******************
-;;; naked-pairs-column
-;;; ******************
-
 (defrule naked-pairs-column
 
    (phase match)
@@ -536,10 +418,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Pairs"))))
-
-;;; *****************
-;;; naked-pairs-group
-;;; *****************
 
 (defrule naked-pairs-group
 
@@ -569,13 +447,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Pairs"))))
 
-;;; ############
-;;; Hidden Pairs
-;;; ############
-
-;;; ****************
-;;; hidden-pairs-row
-;;; ****************
 
 (defrule hidden-pairs-row
 
@@ -602,10 +473,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Pairs"))))
-
-;;; *******************
-;;; hidden-pairs-column
-;;; *******************
 
 (defrule hidden-pairs-column
 
@@ -634,10 +501,6 @@
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Pairs"))))
 
 
-;;; ******************
-;;; hidden-pairs-group
-;;; ******************
-
 (defrule hidden-pairs-group
 
    (phase match)
@@ -664,14 +527,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Pairs"))))
 
-
-;;; ######
-;;; X Wing
-;;; ######
-
-;;; **********
-;;; X-Wing-Row
-;;; **********
 
 (defrule X-Wing-Row
 
@@ -701,10 +556,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "X Wing"))))
 
-;;; *************
-;;; X-Wing-Column
-;;; *************
-
 (defrule X-Wing-Column
 
    (phase match)
@@ -733,13 +584,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "X Wing"))))
 
-;;; #############
-;;; Naked Triples
-;;; #############
-
-;;; ****************
-;;; generate-triples
-;;; ****************
 
 (defrule generate-triples
    
@@ -758,10 +602,6 @@
    =>
    
    (assert (triple ?v1 ?v2 ?v3)))
-
-;;; *****************
-;;; naked-triples-row
-;;; *****************
 
 (defrule naked-triples-row
 
@@ -793,10 +633,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Triples"))))
 
-;;; ********************
-;;; naked-triples-column
-;;; ********************
-
 (defrule naked-triples-column
 
    (phase match)
@@ -826,10 +662,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Triples"))))
-
-;;; *******************
-;;; naked-triples-group
-;;; *******************
 
 (defrule naked-triples-group
 
@@ -861,13 +693,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Naked Triples"))))
 
-;;; ##############
-;;; Hidden Triples
-;;; ##############
-
-;;; ******************
-;;; hidden-triples-row
-;;; ******************
 
 (defrule hidden-triples-row
 
@@ -895,10 +720,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Triples"))))
 
-;;; *********************
-;;; hidden-triples-column
-;;; *********************
-
 (defrule hidden-triples-column
 
    (phase match)
@@ -924,10 +745,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Triples"))))
-
-;;; ********************
-;;; hidden-triples-group
-;;; ********************
 
 (defrule hidden-triples-group
 
@@ -955,13 +772,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Hidden Triples"))))
 
-;;; #########
-;;; Swordfish
-;;; #########
-
-;;; *************
-;;; swordfish-row
-;;; *************
 
 (defrule swordfish-row
 
@@ -993,10 +803,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Swordfish"))))
 
-;;; ****************
-;;; swordfish-column
-;;; ****************
-
 (defrule swordfish-column
 
    (phase match)
@@ -1027,13 +833,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Swordfish"))))
 
-;;; #######
-;;; XY-Wing
-;;; #######
-
-;;; *******
-;;; XY-Wing
-;;; *******
  
 (defrule XY-Wing
 
@@ -1076,14 +875,6 @@
    
    (assert (impossible (id ?id) (value ?z) (rank ?p) (reason "XY-Wing"))))
 
-;;; ######
-;;; Colors
-;;; ######
-
-;;; **********************
-;;; initialize-color-pairs
-;;; **********************
-
 (defrule initialize-color-pairs
   
   (phase match)
@@ -1109,10 +900,6 @@
   (assert (color-pair blue yellow))
   (assert (color-pair red cyan))
   (assert (color-pair cyan red)))
-
-;;; *********
-;;; color-row
-;;; *********
 
 (defrule color-row
 
@@ -1160,10 +947,6 @@
                                  (value ?v)
                                  (color ?color2))))
 
-;;; ************
-;;; color-column
-;;; ************
-
 (defrule color-column
 
    (declare (salience -10))
@@ -1183,12 +966,8 @@
                      
    (color-pair ?color1 ?color2)
    
-   ;; Don't use a color previously used for this value.
-
    (not (position-value-color (value ?v)
                               (color ?color1 | ?color2)))
-   
-   ;; Don't try to color the position if it's already colored. 
    
    (not (position-value-color (row ?r1 | ?r2)
                               (column ?c)
@@ -1210,9 +989,6 @@
                                  (value ?v)
                                  (color ?color2))))
 
-;;; *******************
-;;; propagate-color-row
-;;; *******************
 
 (defrule propagate-color-row
 
@@ -1242,10 +1018,6 @@
                                  (value ?v)
                                  (color ?color2))))
 
-;;; **********************
-;;; propagate-color-column
-;;; **********************
-
 (defrule propagate-color-column
 
    (phase match)
@@ -1273,10 +1045,6 @@
                                  (id ?id)
                                  (value ?v)
                                  (color ?color2))))
-
-;;; *********************
-;;; propagate-color-group
-;;; *********************
 
 (defrule propagate-color-group
 
@@ -1306,13 +1074,6 @@
                                  (value ?v)
                                  (color ?color2))))
 
-;;; ###############
-;;; Duplicate-Color
-;;; ###############
-
-;;; **********************
-;;; duplicate-color-in-row
-;;; **********************
 
 (defrule duplicate-color-in-row
 
@@ -1341,10 +1102,6 @@
    (assert (impossible (id ?id1) (value ?v) (rank ?p) (reason "Duplicate Color"))))
    
    
-;;; *************************
-;;; duplicate-color-in-column
-;;; *************************
-
 (defrule duplicate-color-in-column
 
    (phase match)
@@ -1370,10 +1127,6 @@
    =>
    
    (assert (impossible (id ?id1) (value ?v) (rank ?p) (reason "Duplicate Color"))))
-   
-;;; ************************
-;;; duplicate-color-in-group
-;;; ************************
 
 (defrule duplicate-color-in-group
 
@@ -1399,13 +1152,6 @@
 
    (assert (impossible (id ?id1) (value ?v) (rank ?p) (reason "Duplicate Color"))))
 
-;;; ####################
-;;; Color-Conjugate-Pair
-;;; ####################
-
-;;; ********************
-;;; color-conjugate-pair
-;;; ********************
 
 (defrule color-conjugate-pair
 
@@ -1437,9 +1183,6 @@
       
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Color Conjugate Pairs"))))
    
-;;; ##################
-;;; Multi-Color-Type-1
-;;; ##################
    
 (defrule multi-color-type-1
 
@@ -1493,9 +1236,6 @@
 
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Multi Color Type 1"))))
  
-;;; ##################
-;;; Multi-Color-Type-2
-;;; ##################
    
 (defrule multi-color-type-2
 
@@ -1548,13 +1288,6 @@
    
    (assert (impossible (id ?id) (value ?v) (rank ?p) (reason "Multi Color Type 2"))))
 
-;;; #############
-;;; Forced Chains
-;;; #############
-
-;;; ***********
-;;; start-chain
-;;; ***********
 
 (defrule start-chain
 
@@ -1586,9 +1319,6 @@
                   (id ?id)
                   (value ?v1))))
 
-;;; ******************
-;;; continue-chain-row
-;;; ******************
 
 (defrule continue-chain-row
 
@@ -1622,10 +1352,6 @@
                   (id ?id)
                   (value ?v2))))
 
-;;; *********************
-;;; continue-chain-column
-;;; *********************
-
 (defrule continue-chain-column
 
    (declare (salience -10))
@@ -1658,9 +1384,6 @@
                   (id ?id)
                   (value ?v2))))
    
-;;; ********************
-;;; continue-chain-group
-;;; ********************
 
 (defrule continue-chain-group
 
@@ -1694,10 +1417,6 @@
                   (id ?id2)
                   (value ?v2))))
 
-;;; ************************
-;;; forced-chain-convergence
-;;; ************************
-
 (defrule forced-chain-convergence
 
    (phase match)
@@ -1727,10 +1446,6 @@
    =>
    
    (assert (impossible (id ?id) (value ?v3) (rank ?p) (reason "Forced Chain Convergence"))))
-
-;;; ***************
-;;; forced-chain-XY
-;;; ***************
 
 (defrule forced-chain-XY
 
@@ -1764,13 +1479,6 @@
    
    (assert (impossible (id ?id) (value ?v1) (rank ?p) (reason "Forced Chain XY"))))
    
-;;; ################
-;;; Unique-Rectangle
-;;; ################
-
-;;; ********************
-;;; Unique-Rectangle-Row
-;;; ********************
 
 (defrule Unique-Rectangle-Row
 
@@ -1810,10 +1518,6 @@
    
    (assert (impossible (id ?id1) (value ?v1) (rank ?p) (reason "Unique Rectangle"))))
    
-;;; ***********************
-;;; Unique-Rectangle-Column
-;;; ***********************
-
 (defrule Unique-Rectangle-Column
    
    (phase match)

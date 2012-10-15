@@ -1,12 +1,4 @@
-;;; ############
-;;; OUTPUT RULES
-;;; ############
-
 (defglobal ?*output* = t)
-
-;;; *************
-;;; print-initial
-;;; *************
 
 (defrule print-initial
 
@@ -18,10 +10,6 @@
    
    (printout ?*output* crlf "The puzzle is: " crlf crlf "   "))
 
-;;; ***********
-;;; print-final
-;;; ***********
-
 (defrule print-final
 
    (declare (salience 10))
@@ -31,10 +19,6 @@
    =>
    
    (printout ?*output* crlf "The solution is: " crlf crlf "   "))
-
-;;; **************************
-;;; print-position-value-found
-;;; **************************
 
 (defrule print-position-value-found
 
@@ -61,10 +45,6 @@
          (printout ?*output* " " ?v))
       else
       (printout ?*output* ?v)))
-   
-;;; ******************************
-;;; print-position-value-not-found
-;;; ******************************
 
 (defrule print-position-value-not-found
 
@@ -88,10 +68,6 @@
       else
       (printout ?*output* *)))
    
-;;; ********************
-;;; next-position-column
-;;; ********************
-
 (defrule next-position-column
 
    (declare (salience -10))
@@ -116,10 +92,6 @@
    
    (assert (print-position ?r (+ 1 ?c))))
 
-;;; *****************
-;;; next-position-row
-;;; *****************
-   
 (defrule next-position-row
 
    (declare (salience -10))
@@ -144,10 +116,6 @@
    
    (assert (print-position (+ 1 ?r) 1)))
    
-;;; ************************
-;;; output-done-rule-listing
-;;; ************************
-
 (defrule output-done-rule-listing
 
    (declare (salience -10))
@@ -170,9 +138,6 @@
    
    (assert (phase list-rules)))
    
-;;; ***************************
-;;; output-done-no-rule-listing
-;;; ***************************
 
 (defrule output-done-no-rule-listing
 
@@ -194,9 +159,6 @@
    
    (retract ?f1 ?f2))
 
-;;; *******************
-;;; initial-output-done
-;;; *******************
 
 (defrule initial-output-done
 
@@ -216,10 +178,6 @@
    
    (retract ?f1 ?f2))
       
-;;; *********
-;;; list-rule
-;;; *********
-
 (defrule list-rule
 
    (phase list-rules)
@@ -234,9 +192,6 @@
    
    (retract ?f))
     
-;;; **************
-;;; list-rule-done
-;;; **************
 
 (defrule list-rule-done
 

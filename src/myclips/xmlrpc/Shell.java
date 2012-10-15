@@ -36,9 +36,12 @@ public class Shell {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String theRead;
 		
-		System.out.print(">>> MyCLIPS XMLRPC Server address? ");
-		theRead = stdin.readLine();
+		/*System.out.print(">>> MyCLIPS XMLRPC Server address? ");
+		theRead = stdin.readLine();*/
 		
+		
+		theRead = "http://192.168.1.7:8081/RPC2";
+				
 		MyClips mc;
 		
 		try {

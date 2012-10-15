@@ -56,7 +56,7 @@ public class EndPoint {
 	
 	public String getAddress() {
 		try {
-			return String.format("http://localhost:%d/xmlrpc", this.getServer().getPort());
+			return String.format("http://192.168.1.8:%d/xmlrpc", this.getServer().getPort());
 		} catch (Exception e) {
 			return null;
 		}
