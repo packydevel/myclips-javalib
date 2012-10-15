@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.xmlrpc.XmlRpcException;
 
 import myclips.xmlrpc.listener.ConsoleLoggerListener;
@@ -36,19 +37,19 @@ public class Shell {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String theRead;
 		
-		/*System.out.print(">>> MyCLIPS XMLRPC Server address? ");
-		theRead = stdin.readLine();*/
+		System.out.print(">>> MyCLIPS XMLRPC Server address? ");
+		theRead = stdin.readLine();
 		
 		
-		theRead = "http://192.168.1.7:8081/RPC2";
+		theRead = "http://localhost:8082/RPC2";
 				
 		MyClips mc;
 		
 		try {
 			mc = new MyClips(theRead);
 		} catch (Exception e) {
-			System.out.print("		[Invalid address. Fallback to `http://localhost:8081/RPC2`]");
-			mc = new MyClips("http://localhost:8081/RPC2");
+			System.out.print("		[Invalid address. Fallback to `http://localhost:8082/RPC2`]");
+			mc = new MyClips("http://localhost:8082/RPC2");
 		}
 		
 		
@@ -90,11 +91,26 @@ public class Shell {
 					ce.register("JListener", ConsoleLoggerListener.class, ClientEvents.EVENTS.E_FACT_ASSERTED, ClientEvents.EVENTS.E_NODE_ADDED);
 				}
 				
-			} else if (theRead.startsWith("(load ")) {
+//			} else if (theRead.startsWith("(load ")) {
+//				
+//				System.out.println("THE FILE: " + theRead.substring("(load ".length(), theRead.length() - 2 ));
+//				
+//				loadFile(rs, theRead.substring("(load ".length(), theRead.length() - 2 ));
+				
+			} else if ( theRead.startsWith("(load ")) {
 				
 				System.out.println("THE FILE: " + theRead.substring("(load Q".length(), theRead.length() - 2 ));
 				
-				loadFile(rs, theRead.substring("(load Q".length(), theRead.length() - 2 ));
+				String theFile = theRead.substring("(load Q".length(), theRead.length() - 2 );
+				
+				String theFileContent = Shell.readFileAsString(theFile);
+				
+				byte[] encoded = Base64.encodeBase64(theFileContent.getBytes());
+				
+				String theEncodedContent = new String(encoded);
+				
+				rBuffer = rs.doDo("(load \""+ theEncodedContent + "\")");
+				
 				
 			} else {
 				rBuffer = rs.doDo(theRead);
@@ -104,6 +120,22 @@ public class Shell {
 			}
 		}
 		
+	}
+	
+	
+	private static String readFileAsString(String filePath)
+			throws java.io.IOException {
+		StringBuffer fileData = new StringBuffer(1000);
+		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		char[] buf = new char[1024];
+		int numRead = 0;
+		while ((numRead = reader.read(buf)) != -1) {
+			String readData = String.valueOf(buf, 0, numRead);
+			fileData.append(readData);
+			buf = new char[1024];
+		}
+		reader.close();
+		return fileData.toString();
 	}
 	
 	static void loadFile(RemoteShell rs, String theFile) throws IOException, XmlRpcException {
