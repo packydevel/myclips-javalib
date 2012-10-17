@@ -2,6 +2,11 @@ package myclips.xmlrpc.listener;
 
 import myclips.xmlrpc.EndPointService;
 
+/**
+ * Classe astratta per l'implementazione dei listener remoti
+ * @author Francesco Capozzo
+ *
+ */
 public abstract class ClientListener implements EndPointService, IClientListener {
 	
 	protected int token = 0;

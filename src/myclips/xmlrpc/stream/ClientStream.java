@@ -2,6 +2,11 @@ package myclips.xmlrpc.stream;
 
 import myclips.xmlrpc.EndPointService;
 
+/**
+ * Classe astratta per l'implementazione dei client-stream
+ * @author Francesco Capozzo
+ *
+ */
 public abstract class ClientStream implements EndPointService, IClientStream {
 	
 	protected int token = 0;

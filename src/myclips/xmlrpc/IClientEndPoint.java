@@ -1,5 +1,6 @@
 package myclips.xmlrpc;
 
+
 public interface IClientEndPoint {
 
 	void registerWithName(String eName);

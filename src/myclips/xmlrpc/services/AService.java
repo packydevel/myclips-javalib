@@ -4,6 +4,13 @@ import org.apache.xmlrpc.XmlRpcException;
 
 import myclips.xmlrpc.MyClips;
 
+/**
+ * Classe astratta che implementa IService
+ * 
+ * Implementa alcuni metodi banali
+ * @author Francesco Capozzo
+ *
+ */
 public class AService implements IService {
 
 	protected MyClips owner = null;

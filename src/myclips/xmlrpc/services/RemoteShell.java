@@ -4,6 +4,11 @@ import org.apache.xmlrpc.XmlRpcException;
 
 import myclips.xmlrpc.skeleton.ASkeleton;
 
+/**
+ * Mappa il servizio RemoteShell_MyClipsShell
+ * @author Francesco Capozzo
+ *
+ */
 public class RemoteShell extends AService {
 	
 	public static final String SERVICE_NAME = "RemoteShell_MyClipsShell";

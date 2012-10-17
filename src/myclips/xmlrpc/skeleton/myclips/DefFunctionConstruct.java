@@ -8,7 +8,7 @@ import myclips.xmlrpc.skeleton.ASkeleton;
  *  
  * @author Francesco Capozzo
  */
-public class DefFunctionConstruct extends MyClipsType {
+public class DefFunctionConstruct extends MyClipsConstruct {
 
     public static final java.lang.String SKELETON_NAME = "myclips.parser.Types.DefFunctionConstruct";
 

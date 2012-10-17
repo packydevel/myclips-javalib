@@ -10,19 +10,41 @@ import myclips.xmlrpc.stream.StreamSecurity;
 
 import org.apache.xmlrpc.XmlRpcException;
 
+/**
+ * Mappa il servizio ClientEvents_ClientEvents
+ * @author Francesco Capozzo
+ *
+ */
 public class ClientEvents extends AService {
 	
 	public static final String SERVICE_NAME = "ClientEvents_ClientEvents";
 	
-	public void register(String aListenerName, String aListenerAddress, int aReverseToken, String... events) throws XmlRpcException {
+	/**
+	 * Registra un indirizzo di endpoint per una lista di eventi
+	 * @param aListenerName il nome del listener
+	 * @param aListenerAddress l'indirizzo dell'endpoint
+	 * @param aReverseToken il reverse token
+	 * @param events la lista di eventi
+	 * @throws XmlRpcException
+	 */
+	public void register(String aListenerName, String aListenerAddress, int aReverseToken, String[] events) throws XmlRpcException {
 		this.doGeneric("register", true, aListenerName, aListenerAddress, aReverseToken, events);
 	}
 	
-	public <T extends ClientListener> EndPoint register(String aListenerName, Class<T> clClass, String...events) throws Exception {
+	/**
+	 * Crea e registra unendpoint per un listener di eventi
+	 * @param clientExternalIp l'indirizzo ip (solo IP o hostname, niente porta) esterno a cui il client e' in ascolto 
+	 * @param aListenerName il nome del listener
+	 * @param clClass la classe listener materialmente eseguira il comportamento di risposta
+	 * @param events la lista di eventi
+	 * @return l'end-point registrato
+	 * @throws Exception
+	 */
+	public <T extends ClientListener> EndPoint register(String clientExternalIp, String aListenerName, Class<T> clClass, String[] events) throws Exception {
 		
 		T cl = clClass.newInstance();
 		
-		EndPoint ep = new EndPoint(cl);
+		EndPoint ep = new EndPoint(cl, clientExternalIp);
 		ep.start(true);
 		
 		this.register( aListenerName, ep.getAddress(), cl.getToken(), events );
@@ -31,11 +53,22 @@ public class ClientEvents extends AService {
 		
 	}
 	
-
+	
+	/**
+	 * De-registra un listener usando il nome di registrazione
+	 * @param aListenerName
+	 * @throws XmlRpcException
+	 */
 	public void unregister(String aListenerName) throws XmlRpcException {
 		this.doGeneric("unregister", true, aListenerName);
 	}
 	
+	/**
+	 * La lista di eventi di default a cui e' possibile
+	 * collegarsi.
+	 * @author Francesco Capozzo
+	 *
+	 */
 	public class EVENTS {
 		
 	    public static final String E_RULE_FIRED  = "rule-fired";

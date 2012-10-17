@@ -21,8 +21,9 @@ public class EndPoint {
 	protected XmlRpcServer theXmlRpcServer = null;
 	protected PropertyHandlerMapping phm = null;
 	protected EndPointService theService = null;
+	protected String externalIp = "127.0.0.1";
 	
-	public EndPoint(EndPointService aService) {
+	public EndPoint(EndPointService aService, String externalIp) {
 		theService = aService;
 	}
 	
@@ -56,7 +57,7 @@ public class EndPoint {
 	
 	public String getAddress() {
 		try {
-			return String.format("http://localhost:%d/xmlrpc", this.getServer().getPort());
+			return String.format("http://%s:%d/xmlrpc", this.externalIp, this.getServer().getPort());
 		} catch (Exception e) {
 			return null;
 		}

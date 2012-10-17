@@ -9,9 +9,20 @@ import org.reflections.Reflections;
 
 public class SkeletonsManager {
 	
+	/**
+	 * Il package che contiene le classi che mappano gli skeleton
+	 */
 	protected String sPackage = null;
+	/**
+	 * La lista delle classi skeleton caricate
+	 */
 	protected Map<String, Class<? extends ASkeleton>> skeletons = new HashMap<String, Class<? extends ASkeleton>>();
 			
+	/**
+	 * Crea un nuovo skeletons manager caricando gli skeleton
+	 * dal package indicato
+	 * @param sPackage nome del package
+	 */
 	public SkeletonsManager(String sPackage) {
 		
 		this.sPackage = sPackage;
@@ -26,6 +37,12 @@ public class SkeletonsManager {
 		
 	}
 	
+	/**
+	 * Crea una nuova istanza dello skeleton
+	 * @param la classe skeleton
+	 * @return l'istanza
+	 * @throws InvalidSkeletonException Lo skeleton non e' valido
+	 */
 	public <T extends ASkeleton> T create(Class<T> aSkeletonClass ) throws InvalidSkeletonException {
 		try {
 			return aSkeletonClass.newInstance();
@@ -34,6 +51,15 @@ public class SkeletonsManager {
 		}
 	}
 	
+	/**
+	 * Crea una nuova istanza impostando i valori
+	 * iniziali
+	 * 
+	 * @param aSkeletonClass la classe dello skeleton
+	 * @param args gli argomenti
+	 * @return l'istanza
+	 * @throws InvalidSkeletonException
+	 */
 	public <T extends ASkeleton> T create(Class<T> aSkeletonClass, Map<String, Object> args ) throws InvalidSkeletonException {
 		T theSkeleton = this.create(aSkeletonClass);
 		
@@ -44,6 +70,12 @@ public class SkeletonsManager {
 		return theSkeleton;
 	}
 	
+	/**
+	 * Converte i risultati ottenuti dai metodi
+	 * xmlrpc in classi e istanza locali
+	 * @param pObject
+	 * @return
+	 */
 	public Object convert(Object[] pObject) {
 		
 		List<Object> l = new ArrayList<Object>(pObject.length);
@@ -56,6 +88,12 @@ public class SkeletonsManager {
 		
 	}
 	
+	/**
+	 * Converte un dizionario in uno skeleton (se possibile)
+	 * altrimenti in un semplice dizionario
+	 * @param pObject
+	 * @return Map|ASkeleton
+	 */
 	public Object convert(Map<?,?> pObject) {
 		
 		Object theReturn = null;
@@ -79,6 +117,11 @@ public class SkeletonsManager {
 		
 	}
 	
+	/**
+	 * Conversione generica
+	 * @param pObject
+	 * @return
+	 */
 	public Object convert(Object pObject) {
 		if (pObject instanceof Map) {
 			return this.convert((Map<?,?>) pObject);
@@ -89,7 +132,19 @@ public class SkeletonsManager {
 		}
 	}
 	
+
+	/**
+	 * Converte un dizionario rappresentante uno skeleton in un'istanza
+	 * @param pObject il dizionario
+	 * @return lo skeleton
+	 * @throws InvalidSkeletonException il dizionario non rappresenta uno skeleton
+	 */
 	public ASkeleton parseSkeleton(Map<?, ?> pObject) throws InvalidSkeletonException {
+		
+		// un dizionario generico e' uno skeleton se e solo se:
+		//	il primo livello  ha esattamente 2 chiavi:
+		//		class -> contiene il nome dello skeleton da mappare
+		//		proprerties -> e' un dizionario di valori rappresentati dallo skeleton
 		
 		if ( pObject instanceof Map && pObject.size() == 2 
 				&& pObject.containsKey("class") && pObject.containsKey("properties") 
@@ -116,6 +171,12 @@ public class SkeletonsManager {
 		
 	}
 	
+	/**
+	 * Ottiene una nuova istanza skeleton dal nome
+	 * @param skeletonName il nome dello skeleton
+	 * @return
+	 * @throws InvalidSkeletonException
+	 */
 	public Class<ASkeleton> getSkeletonFor(String skeletonName) throws InvalidSkeletonException {
 		
 		@SuppressWarnings("unchecked")

@@ -55,8 +55,8 @@ public class Shell {
 		
 		mc.addService("ClientIO", ClientIO.class);
 		ClientIO io = (ClientIO) mc.getService("ClientIO");
-		io.register("stdout", System.out, ConsoleOutputClientStream.class);
-		io.register("stdin", System.in, ConsoleInputClientStream.class);
+		io.register("127.0.0.1", "stdout", System.out, ConsoleOutputClientStream.class);
+		io.register("127.0.0.1", "stdin", System.in, ConsoleInputClientStream.class);
 
 		mc.addService("ClientEvents", ClientEvents.class);
 		ClientEvents ce = (ClientEvents) mc.getService("ClientEvents");
@@ -88,14 +88,8 @@ public class Shell {
 			} else if (theRead.equals("(watch all)")) {
 				if (!listenerOn) {
 					listenerOn = true;
-					ce.register("JListener", ConsoleLoggerListener.class, ClientEvents.EVENTS.E_FACT_ASSERTED, ClientEvents.EVENTS.E_NODE_ADDED);
+					ce.register("127.0.0.1", "JListener", ConsoleLoggerListener.class, new String[]{ClientEvents.EVENTS.E_FACT_ASSERTED, ClientEvents.EVENTS.E_NODE_ADDED});
 				}
-				
-//			} else if (theRead.startsWith("(load ")) {
-//				
-//				System.out.println("THE FILE: " + theRead.substring("(load ".length(), theRead.length() - 2 ));
-//				
-//				loadFile(rs, theRead.substring("(load ".length(), theRead.length() - 2 ));
 				
 			} else if ( theRead.startsWith("(load ")) {
 				
@@ -136,75 +130,6 @@ public class Shell {
 		}
 		reader.close();
 		return fileData.toString();
-	}
-	
-	static void loadFile(RemoteShell rs, String theFile) throws IOException, XmlRpcException {
-		
-		
-		//BufferedReader br = new BufferedReader(new FileReader(theFile));
-		
-		FileReader fr = new FileReader(theFile); 
-		
-		StringBuffer sb = new StringBuffer();
-		
-		Object rBuffer = null;
-		
-		int r;
-		
-		int grade = 0;
-		boolean quote = false;
-		boolean escaped = false;
-		
-		while ((r = fr.read()) != -1) {
-            char ch = (char) r;
-            
-            Character cc = new Character(ch);
-            
-            if ( escaped ) {
-            	escaped = false;
-            	sb.append(ch);
-            	continue;
-            }
-            
-            if ( cc.equals('\\') ) {
-            	escaped = true;
-            }
-            
-            if ( !quote && cc.equals('(') ) {
-            	grade++;
-            }
-            
-            if ( !quote && cc.equals(')') ) {
-            	grade--;
-            }
-            
-            if ( cc.equals('"') ) {
-            	quote = !quote;
-            }
-            
-            sb.append(ch);
-            
-            
-            if (grade <= 0) {
-            	
-            	String ts = sb.toString().trim();
-            	
-            	if (ts.length() > 0 ) {
-					rBuffer = rs.doDo(ts);
-					sb = new StringBuffer();
-					if (rBuffer != null ) {
-						System.out.println(rBuffer);
-					}
-            	} else {
-            		sb = new StringBuffer();
-            	}
-            }
-            
-            
-        }
-		
-		
-		
 	}
 	
 }
